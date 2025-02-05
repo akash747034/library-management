@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\api\auth\DeleteUserController;
 use App\Http\Controllers\api\auth\LoginController;
+use App\Http\Controllers\api\auth\LogoutController;
 use App\Http\Controllers\api\auth\RegisterController;
+use App\Http\Controllers\api\book\BookController;
+use App\Http\Controllers\api\book_issue\BookIssueController;
 use App\Http\Middleware\FormKeyMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,7 +32,15 @@ Route::middleware(FormKeyMiddleware::class)->group(function () {
     Route::post("/register", RegisterController::class);
   });
 
-// Route::middleware(['auth:api'])->group(function () {});
+Route::middleware(['auth:api'])->group(function () {
+    Route::post('/logout',LogoutController::class);
+    Route::delete('/user',DeleteUserController::class);
+
+    Route::resource('/books', BookController::class);
+    Route::resource('/book_issues', BookIssueController::class);
+
+
+});
 
 
 

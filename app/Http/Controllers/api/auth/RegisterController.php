@@ -17,7 +17,6 @@ class RegisterController extends Controller
          {  
              
             $user = User::create(['name' => $request->name,'email' => $request->email, 'password' => Hash::make($request->password),'role'=>$request->role]);
-           
             return response()->json(new UserResource($user),200);
         }
          catch(\Throwable $th){

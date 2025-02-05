@@ -1,15 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\book;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookIssueRequest;
 use App\Models\BookIssue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
-class BookRquestController extends Controller
+class BookRequestController extends Controller
 {
     public function index(){
+      
         try{
 
             $book_issue_requests=BookIssue::with(['user','book'])
@@ -23,11 +26,18 @@ class BookRquestController extends Controller
               }
     
                return view('admin.book-requests');
-
            
         }
         catch(\Throwable $th){
             return response()->json(['message'=>$th->getMessage()]);
         }
+    }
+
+
+    public function store(BookIssueRequest $request)
+    {
+            $Book_issue=BookIssue::create(['user_id'=>Auth::id(),'book_id'=>$request->book_id,'issue_status'=>'requested']);
+
+            return response()->json($Book_issue);
     }
 }

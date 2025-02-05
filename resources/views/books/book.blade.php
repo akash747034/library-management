@@ -10,23 +10,22 @@
     
     $(document).ready(function() {
         var tabel = $('#datatables-basic').DataTable({
-            ajax: '{{route("book-issue.requests") }}',
+            ajax: '{{route("books.index") }}',
             columns: [{
                     data: 'DT_RowIndex',
                     orderable: false,
                     searchable: false
                 },
-
           
                     {
-                        "data": "user.name"
+                        "data": "name"
                     },
                     {
-                        "data": "book.name"
+                        "data": "auther.name"
                     },
                  
                     {
-                        "data": "issue_status"
+                        "data": "publisher.name"
                     },
                   
                     {
@@ -60,9 +59,9 @@
         <tr>
          
           <th>#</th>
-          <th>User Name</th>
-          <th>Book Name</th>
-          <th>Status</th>
+          <th> Name</th>
+          <th>Auther</th>
+          <th>Publisher</th>
           <th>Created At</th>
          
         </tr>

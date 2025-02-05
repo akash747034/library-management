@@ -39,9 +39,4 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-     protected function credentials(Request $request)
-    {
-            
-        return array_merge($request->only($this->username(), 'password'), ['role' => 'admin']);
-    }
 }

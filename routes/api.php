@@ -27,20 +27,20 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::middleware(FormKeyMiddleware::class)->group(function () {
-    Route::post("/login", LoginController::class);
-    Route::post("/register", RegisterController::class);
-  });
+// Route::middleware(FormKeyMiddleware::class)->group(function () {
+//     Route::post("/login", LoginController::class);
+//     Route::post("/register", RegisterController::class);
+//   });
 
-Route::middleware(['auth:api'])->group(function () {
-    Route::post('/logout',LogoutController::class);
-    Route::delete('/user',DeleteUserController::class);
+// Route::middleware(['auth:api'])->group(function () {
+//     Route::post('/logout',LogoutController::class);
+//     Route::delete('/user',DeleteUserController::class);
 
-    Route::resource('/books', BookController::class);
-    Route::resource('/book_issues', BookIssueController::class);
+//     Route::resource('/books', BookController::class);
+//     Route::resource('/book_issues', BookIssueController::class);
 
 
-});
+// });
 
 
 

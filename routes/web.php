@@ -27,11 +27,11 @@ Route::get('auth-login', [LoginController::class, 'showLoginForm'])->name('login
 Route::post('auth-login', [LoginController::class, 'login'])->name('login');
 
 Route::middleware(['auth'])->group(function(){
+   
     Route::post('auth-logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('users',UserListController::class)->name('users.list');
-
     Route::get('book_issuse_requests',[BookRquestController::class,'index'])->name('book_issue.requests');
 
 });

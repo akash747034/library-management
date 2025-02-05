@@ -10,23 +10,23 @@
     
     $(document).ready(function() {
         var tabel = $('#datatables-basic').DataTable({
-            ajax: '{{route("users.list") }}',
+            ajax: '{{route("book_issue.requests") }}',
             columns: [{
                     data: 'DT_RowIndex',
                     orderable: false,
                     searchable: false
                 },
-              
+
           
                     {
-                        "data": "name"
+                        "data": "user.name"
                     },
                     {
-                        "data": "email"
+                        "data": "book.name"
                     },
                  
                     {
-                        "data": "role"
+                        "data": "issue_status"
                     },
                   
                     {
@@ -50,7 +50,7 @@
 @section('content')
 
 <h4 class="fw-bold py-3 mb-4">
-  <span class="text-muted fw-light">Users</span>
+  <span class="text-muted fw-light">Books</span>
 </h4>
 
 <div class="card">
@@ -60,10 +60,10 @@
         <tr>
          
           <th>#</th>
-          <th>image</th>
-          <th>Name</th>
-          <th>Surname</th>
-          <th>Email</th>
+          <th>User Name</th>
+          <th>Book Name</th>
+          <th>Status</th>
+          <th>Created At</th>
          
         </tr>
       </thead>

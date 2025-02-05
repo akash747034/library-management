@@ -15,8 +15,7 @@ class UserListController extends Controller
         {
            $users=User::where('role','!=','admin')
            ->orderByDesc('created_at')
-           ->get();
-
+           ;
 
            if(request()->ajax()){
 

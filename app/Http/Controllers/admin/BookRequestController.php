@@ -12,103 +12,115 @@ use Yajra\DataTables\Facades\DataTables;
 
 class BookRequestController extends Controller
 {
-    public function bookIssueRequests(){
-      
-        try{
+    public function bookIssueRequests()
+    {
 
-            $book_issue_requests=BookIssue::with(['user','book'])
-            ->where('issue_status','=','requested')
-            ->orderByDesc('created_at');
+        try {
 
-            if(request()->ajax()){
+            $book_issue_requests = BookIssue::with(['user', 'book'])
+                ->where('issue_status', '=', 'requested')
+                ->orderByDesc('created_at');
+
+            if (request()->ajax()) {
 
                 return DataTables::of($book_issue_requests)
-                ->addIndexColumn()
-                ->editColumn('created_at',function($user){
-                    return $user->created_at->diffForHumans();
-                  })
-                  ->addColumn('action',function($book){
-                  
-                    return '<button class="btn btn-primary open-modal" 
+                    ->addIndexColumn()
+                    ->editColumn('created_at', function ($user) {
+                        return $user->created_at->diffForHumans();
+                    })
+                    ->addColumn('action', function ($book) {
+
+                        return '<button class="btn btn-primary open-modal" 
                     data-id="' . $book->id . '" 
                     >
                       ' . ucfirst($book->issue_status) . '
                     </button>';
-                })
-                ->rawColumns(['action'])
-                 ->make(true);
-              }
-    
-               return view('admin.book-issue-requests');
-           
-        }
-        catch(\Throwable $th){
-            return response()->json(['message'=>$th->getMessage()]);
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
+
+            return view('admin.book-issue-requests');
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()]);
         }
     }
 
 
 
-    public function bookReturnRequests(){
-      
-        try{
+    public function bookReturnRequests()
+    {
 
-            $book_issue_requests=BookIssue::with(['user','book'])
-            ->where('issue_status','=','requestedForReturn')
-            ->orderByDesc('created_at');
+        try {
 
-            if(request()->ajax()){
+            $book_issue_requests = BookIssue::with(['user', 'book'])
+                ->where('issue_status', '=', 'requestedForReturn')
+                ->orderByDesc('created_at');
+
+            if (request()->ajax()) {
 
                 return DataTables::of($book_issue_requests)
-                ->addIndexColumn()
-                ->editColumn('created_at',function($user){
-                    return $user->created_at->diffForHumans();
-                  })
-        
-                  ->addColumn('action',function($book){
-                    return view('actions.admin.return-book-request',compact('book'));
-                })
-                ->rawColumns(['action'])
-                 ->make(true);
-              }
-    
-               return view('admin.book-return-requests');
-           
-        }
-        catch(\Throwable $th){
-            return response()->json(['message'=>$th->getMessage()]);
+                    ->addIndexColumn()
+                    ->editColumn('created_at', function ($user) {
+                        return $user->created_at->diffForHumans();
+                    })
+
+                    ->addColumn('action', function ($book) {
+                        return view('actions.admin.return-book-request', compact('book'));
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
+
+            return view('admin.book-return-requests');
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()]);
         }
     }
 
 
-    public function updateBookIssueRequest(UpdateBookIssueRequest $request){
+    public function updateBookIssueRequest(UpdateBookIssueRequest $request)
+    {
 
-        try
-        {
-        $book=BookIssue::find($request->book_id);
-        $book->issue_status=$request->issue_status;
-        $book->issue_date=now();
-        $book->save();
-        return redirect()->back()->with('success', 'You have successfully accepted book issue request!');
-       }
-         catch(\Throwable $th){
-            return response()->json(['message'=>$th->getMessage()]);
+        try {
+            $book = BookIssue::find($request->book_id);
+
+            if ($request->issue_status == 'issued') {
+
+                if ($book->book->quantity <= 0) {
+                    return redirect()->back()->with('failed', "You don't have enough quantity");
+                }
+
+                $book->book->update(['quantity' => $book->book->quantity - 1]);
+                $book->issue_status = $request->issue_status;
+                $book->issue_date = now();
+                $book->save();
+                return redirect()->back()->with('success', 'You have successfully Accepted book issue request!');
+            }
+             else {
+                $book->issue_status = $request->issue_status;
+                $book->issue_date = now();
+                $book->save();
+                return redirect()->back()->with('success', 'You have successfully Rejected book issue request!');
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()]);
         }
     }
 
-    public function updateBookReturnRequest(UpdateBookReturnRequest $request){
+    public function updateBookReturnRequest(UpdateBookReturnRequest $request)
+    {
 
-        try{
-        $book=BookIssue::find($request->book_id);
-        $book->issue_status='returned';
-        $book->return_date=now();
-        $book->save();
-        return redirect()->back()->with('success', 'You have successfully accepted book return request!');
-        }
-        catch(\Throwable $th){
-            return response()->json(['message'=>$th->getMessage()]);
+        try {
+            $book = BookIssue::find($request->book_id);
+            $book->issue_status = 'returned';
+            $book->return_date = now();
+
+            $book->book->update(['quantity' => $book->book->quantity + 1]);
+            $book->save();
+            return redirect()->back()->with('success', 'You have successfully accepted book return request!');
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()]);
         }
     }
-
-   
 }

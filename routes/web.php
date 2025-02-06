@@ -23,41 +23,40 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-   return redirect('home');
+    return redirect('home');
 });
-
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::middleware(AdminMiddleware::class)->group(function(){
+    Route::middleware(AdminMiddleware::class)->group(function () {
         Route::get('/admin', [AdminHomeController::class, 'index'])->name('admin');
-        Route::get('users',UserListController::class)->name('users.list');
-        Route::get('/admin/books',[AdminBookController::class, 'index'])->name('admin.books');
+        Route::get('users', UserListController::class)->name('users.list');
 
-        Route::get('book-issue',[BookRequestController::class,'bookIssueRequests'])->name('book-issue.requests');
-        Route::get('book-return',[BookRequestController::class,'bookReturnRequests'])->name('book-return.requests');
+        Route::get('/admin/books', [AdminBookController::class, 'index'])->name('admin.books');
+        Route::get('/admin/books/create', [AdminBookController::class, 'create'])->name('admin-book.create');
+        Route::post('/admin/books/store', [AdminBookController::class, 'store'])->name('admin-book.store');
 
-        Route::post('/admin/book-issue',[BookRequestController::class,'updateBookIssueRequest'])->name('admin.book-issue');
-        Route::post('/admin/book-return',[BookRequestController::class,'updateBookReturnRequest'])->name('admin.book-return');
+        Route::get('book-issue', [BookRequestController::class, 'bookIssueRequests'])->name('book-issue.requests');
+        Route::get('book-return', [BookRequestController::class, 'bookReturnRequests'])->name('book-return.requests');
+
+        Route::post('/admin/book-issue', [BookRequestController::class, 'updateBookIssueRequest'])->name('admin.book-issue');
+        Route::post('/admin/book-return', [BookRequestController::class, 'updateBookReturnRequest'])->name('admin.book-return');
     });
-   
-    Route::middleware(UserMiddleware::class)->group(function(){
+
+    Route::middleware(UserMiddleware::class)->group(function () {
         Route::get('/user', [HomeController::class, 'index'])->name('user');
 
-        Route::get('/user/books',[UserBookController::class, 'index'])->name('user.books');
-        Route::get('/user/books-issued',[UserBookController::class,'booksIssued'])->name('books.issued');
+        Route::get('/user/books', [UserBookController::class, 'index'])->name('user.books');
+        Route::get('/user/books-issued', [UserBookController::class, 'booksIssued'])->name('books.issued');
 
-        Route::get('/user/books-issue',[UserBookController::class,'booksIssueRequests'])->name('books.issue');
-        Route::get('/user/books-return',[UserBookController::class,'booksReturnRequests'])->name('books.return');
-      
-        Route::post('user/book-issue',[UserBookController::class,'bookIssue'])->name('book.issue');
-        Route::post('/user/book-return',[UserBookController::class,'bookReturn'])->name('book.return');
+        Route::get('/user/books-issue', [UserBookController::class, 'booksIssueRequests'])->name('books.issue');
+        Route::get('/user/books-return', [UserBookController::class, 'booksReturnRequests'])->name('books.return');
 
+        Route::post('user/book-issue', [UserBookController::class, 'bookIssue'])->name('book.issue');
+        Route::post('/user/book-return', [UserBookController::class, 'bookReturn'])->name('book.return');
     });
-    
 });
-

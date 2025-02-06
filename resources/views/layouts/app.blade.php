@@ -13,6 +13,7 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css">
+    
 
 
     <!-- Scripts -->
@@ -50,6 +51,10 @@
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('book-return.requests') ? 'active text-primary fw-bold' : '' }}" href="{{ route('book-return.requests') }}">Book-Return-Requests</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin-book.create') ? 'active text-primary fw-bold' : '' }}" href="{{ route('admin-book.create') }}">Book-create</a>
+                        </li>
+
                        
                            
                        @endif
@@ -121,10 +126,10 @@
 
 
     @yield('scripts')
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script> -->
     
 </body>
 </html>

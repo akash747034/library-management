@@ -64,6 +64,16 @@
             setTimeout(() => successMessage.remove(), 500);
         }
     }, 3000);
+
+
+    setTimeout(function() {
+        let successMessage = document.getElementById('successFailedMessage');
+        if (successMessage) {
+            successMessage.style.transition = "opacity 0.5s ease";
+            successMessage.style.opacity = "0";
+            setTimeout(() => successMessage.remove(), 500);
+        }
+    }, 3000);
 </script>
 
 
@@ -74,6 +84,13 @@
 <h4 class="fw-bold py-3 mb-4">
     <span class="text-muted fw-light">Issue Book Requests</span>
 </h4>
+
+
+@if(session('failed'))
+<div id="successFailedMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('failed') }}
+</div>
+@endif
 
 @if(session('success'))
 <div id="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">

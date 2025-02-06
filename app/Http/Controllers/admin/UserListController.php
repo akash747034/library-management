@@ -14,13 +14,15 @@ class UserListController extends Controller
         try
         {
            $users=User::where('role','!=','admin')
-           ->orderByDesc('created_at')
-           ;
+           ->orderByDesc('created_at');
 
            if(request()->ajax()){
 
             return DataTables::of($users)
             ->addIndexColumn()
+             ->editColumn('created_at',function($user){
+               return $user->created_at->diffForHumans();
+             })
              ->make(true);
           }
 

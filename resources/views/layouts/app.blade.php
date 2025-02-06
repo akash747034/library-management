@@ -32,6 +32,46 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        
+
+                     @if(auth()->user())
+                       @if (auth()->user()->role=='admin')
+                       <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('users.list') ? 'active text-primary fw-bold' : '' }} " href="{{ route('users.list') }}">Users</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('admin.books') ? 'active text-primary fw-bold' : '' }}" href="{{ route('admin.books') }}">Books</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('book-issue.requests') ? 'active text-primary fw-bold' : '' }}" href="{{ route('book-issue.requests') }}">Book-Issue-Requests</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('book-return.requests') ? 'active text-primary fw-bold' : '' }}" href="{{ route('book-return.requests') }}">Book-Return-Requests</a>
+                        </li>
+                       
+                           
+                       @endif
+
+                       @if (auth()->user()->role=='user')
+                       <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('user.books') ? 'active text-primary fw-bold' : '' }}" href="{{ route('user.books') }}">Books</a>
+                       </li>
+
+                       <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('books.issued') ? 'active text-primary fw-bold' : '' }}" href="{{ route('books.issued') }}">Issued Books</a>
+                       </li>
+                       
+                       <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('books.issue') ? 'active text-primary fw-bold' : '' }}" href="{{ route('books.issue') }}">Issue-Book-Requests</a>
+                       </li>
+                       <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('books.return') ? 'active text-primary fw-bold' : '' }}" href="{{ route('books.return') }}">Return-Book-Request</a>
+                       </li>
+                           
+                       @endif
+                     @endif
 
                     </ul>
 
@@ -81,6 +121,10 @@
 
 
     @yield('scripts')
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
     
 </body>
 </html>

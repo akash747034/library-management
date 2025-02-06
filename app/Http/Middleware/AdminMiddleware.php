@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::user()->role !=='admin'){
-            return response()->json('you are not allowed to access this page');
+            return redirect()->back();
         }
         return $next($request);
     }

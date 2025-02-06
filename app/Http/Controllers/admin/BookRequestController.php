@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BookIssueRequest;
 use App\Models\BookIssue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,10 +33,5 @@ class BookRequestController extends Controller
     }
 
 
-    public function store(BookIssueRequest $request)
-    {
-            $Book_issue=BookIssue::create(['user_id'=>Auth::id(),'book_id'=>$request->book_id,'issue_status'=>'requested']);
-
-            return response()->json($Book_issue);
-    }
+   
 }

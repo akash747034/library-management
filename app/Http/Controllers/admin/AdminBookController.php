@@ -54,6 +54,7 @@ class AdminBookController extends Controller
             'category_id'=>$request->category_id,
             'auther_id'=>$request->auther_id,
             'publisher_id'=>$request->publisher_id,
+            'quantity' =>$request->quantity,
             ]);
 
             return redirect()->back()->with('success', 'Book Added Successfully!');

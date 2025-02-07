@@ -18,9 +18,7 @@ class UserBookController extends Controller
         try
         {  
               $books=Book::with(['publisher','auther','category'])
-                      ->whereDoesntHave('bookIssues',function($query){
-                        $query->whereIn('issue_status', ['requested', 'issued','requestedForReturn']);
-                      })
+                     ->where('quantity','>',0)
                      ->orderByDesc('created_at');
             
                      if(request()->ajax()){

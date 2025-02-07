@@ -21,20 +21,4 @@
     </div>
 </div>
 
-<section class="container my-5">
-        <div class="row text-center">
-            <div class="col-md-4">
-                <h3>Easy Book Search</h3>
-                <p>Find books quickly with our powerful search feature.</p>
-            </div>
-            <div class="col-md-4">
-                <h3>User-Friendly</h3>
-                <p>Manage book borrowing and returns with ease.</p>
-            </div>
-            <div class="col-md-4">
-                <h3>Digital Library</h3>
-                <p>Access e-books and audiobooks from anywhere.</p>
-            </div>
-        </div>
-    </section>
 @endsection

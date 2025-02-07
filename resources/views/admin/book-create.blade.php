@@ -131,6 +131,20 @@
 
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="quantity" class="col-md-4 col-form-label text-md-end">{{ __('Book quantity ') }}</label>
+
+                            <div class="col-md-6">
+                                <input type="number"  id="quantity" type="quantity" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ old('quantity') }}"  autocomplete="quantity" autofocus>
+
+                                @error('quantity')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">

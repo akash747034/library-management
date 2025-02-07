@@ -26,6 +26,7 @@ class CreateBookRequest extends FormRequest
             'auther_id'=>'required|exists:authers,id',
             'publisher_id'=>'required|exists:publishers,id',
             'category_id'=>'required|exists:categories,id',
+            'quantity' =>'required|integer|min:1'
             
         ];
     }
